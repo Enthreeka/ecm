@@ -46,7 +46,7 @@ func (c *ViewGeneral) CallbackStartUser() tgbot.ViewFunc {
 			tgbotapi.NewInlineKeyboardRow(
 				tgbotapi.NewInlineKeyboardButtonURL("Перейти в канал", "https://t.me/MoscowEcon")),
 		)
-		if _, err := c.tgMsg.SendNewMessage(update.FromChat().ID, &startMenu, "Привет!\nЗадай вопрос нашим аналитикам. На самые интересные вопросы мы ответим в Telegram-канале «Экономика Москвы»."); err != nil {
+		if _, err := c.tgMsg.SendNewMessage(update.FromChat().ID, &startMenu, "Привет!\nЗадайте вопросы нашим аналитикам. На самые интересные из них мы ответим в Telegram-канале «Экономика Москвы»."); err != nil {
 			c.log.Error("Failed to send start menu: ", err)
 			return nil
 		}
