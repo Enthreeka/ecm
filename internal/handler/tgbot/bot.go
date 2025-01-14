@@ -136,14 +136,14 @@ func (b *Bot) handlerUpdate(ctx context.Context, update *tgbotapi.Update) {
 			return
 		}
 
-		// создание вопроса
-		if update.Message.Text != "/admin" && update.Message.Text != "/start" && update.Message.Text != "/cancel" {
-			go b.userService.CreateQuestion(context.Background(), update.FromChat().ID, update.Message.Text)
+		if err := b.userService.CreateUserIFNotExist(ctx, userUpdateToModel(update)); err != nil {
+			b.log.Error("userService.CreateUserIfNotExist: failed to create user: %v", err)
 			return
 		}
 
-		if err := b.userService.CreateUserIFNotExist(ctx, userUpdateToModel(update)); err != nil {
-			b.log.Error("userService.CreateUserIfNotExist: failed to create user: %v", err)
+		// создание вопроса
+		if update.Message.Text != "/admin" && update.Message.Text != "/start" && update.Message.Text != "/cancel" {
+			go b.userService.CreateQuestion(context.Background(), update.FromChat().ID, update.Message.Text)
 			return
 		}
 
